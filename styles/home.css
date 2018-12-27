@@ -1,0 +1,201 @@
+html,
+body {
+  height: 100%;
+}
+
+#body {
+  height: 100%;
+}
+
+@keyframes load {
+  0%   {width: 0%;}
+  10%  {width: 10%;}
+  20%  {width: 20%;}
+  30%  {width: 30%}
+  40% {width: 40%;}
+  50% {width: 50%;}
+  60% {width: 60%;}
+  70% {width: 70%;}
+  80% {width: 80%;}
+  90% {width: 90%;}
+  100% {width: 100%;}
+}
+
+@keyframes search {
+  0%   {width: 150px;}
+  10%  {width: 165px;}
+  20%  {width: 180px;}
+  30%  {width: 195px;}
+  40% {width: 210px;}
+  50% {width: 225px;}
+  60% {width: 240px;}
+  70% {width: 255px;}
+  80% {width: 270px;}
+  90% {width: 285px;}
+  100% {width: 300px;}
+}
+
+.page-content {
+  margin-top: 45px;
+}
+
+.fab {
+  right: 30px;
+  bottom: 30px;
+}
+
+.fab2 {
+  right: 30px;
+  bottom: 90px;
+}
+
+.ctrl {
+  right: 30px;
+  bottom: 90px; 
+}
+
+
+.home {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: flex-start;
+  -webkit-box-pack: center;
+  box-align: lcenter;
+  box-pack: center;
+  justify-content: center;
+  padding-top: 0px;
+  padding-bottom: 20px;
+  background-color: white;
+  /** Portion marking where pills will be **/
+  width: 100%;
+  max-width: 900px;
+  padding: 15px;
+  margin: 0 auto;
+  animation-name: load;
+  animation-duration: 0.25s;
+}
+
+.book-pill, .list-pill {
+  width: 100%;
+}
+
+.search-animation-pre {
+  width: 150px;
+  display: inline-block;
+  padding: .375rem .75rem; 
+  font-size: 1rem; 
+  line-height: 1.5;
+  background-color: white; 
+  border: 1px solid #ced4da; 
+  border-radius: .25rem; 
+  color: #495057;
+  margin-right: 0;
+  
+}
+
+.search-animation {
+  width: 300px;
+  display: inline-block;
+  padding: .375rem .75rem; 
+  font-size: 1rem; 
+  line-height: 1.5;
+  background-color: white; 
+  border: 1px solid #ced4da; 
+  border-radius: .25rem; 
+  color: #495057;
+  margin-right: 0;
+  animation-name: search;
+  animation-duration: 0.25s;
+}
+
+.badge-pad {
+  padding-top: 5px;
+  margin-right: 5px; 
+}
+
+.create-account .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.create-account .form-control:focus {
+  z-index: 2;
+}
+
+.create-account input[type="email"] {
+  margin-bottom: 10px;
+}
+
+.field-label {
+font-size: 20px;
+padding: 7px 0px;
+}
+
+.headerhr {
+  border: none;
+  height: 3px;
+  background-color: #333; 
+}
+
+.notificationComment {
+  box-shadow: inset 0 0 20px red; 
+}
+
+.notificationPostEdit {
+  box-shadow: inset 0 0 20px #28a745; 
+}
+
+.notificationNewPost {
+  box-shadow: inset 0 0 20px #579ddf; 
+} 
+
+#main {
+  transition: margin-left 0.2s;
+}
+
+#swiper {
+  width: 100%;
+  padding: 10px;
+  height: 100%;
+}
+
+/**FOR SIDEBAR**/
+.notificationsnav {
+  height: 100%;
+  width: 0px;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: #f1f3f5;
+  overflow-x: hidden;
+  transition: 0.2s;
+  padding-top: 60px;
+  text-align: center;
+}
+
+.notificationsnav .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 30px;
+  margin-left: 50px;
+  cursor: pointer;
+}
+
+#notificationsList a {
+  text-decoration: none; 
+  color: #579ddf;
+}
+
+.opctyDown {
+  opacity: 0.5
+}
+

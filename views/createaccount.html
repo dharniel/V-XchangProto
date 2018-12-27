@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A Book Exchange Platform for Vassar Students">
+    <meta name="author" content="Daniel Elendu">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="../styles/create-account.css" rel="stylesheet">
+    <title>Create Account</title>
+
+  </head>
+  <body>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="h3 mb-3 font-weight-bold">Create Account</h1>
+            <form class="create-account" action="/create" method="POST">
+
+              <h6 class="text-right text-muted">USER INFO</h6>
+              <hr>
+
+              <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <div class="field-label text-left">First Name</div>
+                  <label for="firstName" class="sr-only">First name</label>
+                  <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" required autofocus>
+                  <div id="firstNameHint" class="text-info text-right" style="font-size: 12px"></div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="field-label text-left">Middle Initial</div>
+                  <label for="middleInitial" class="sr-only">Middle Initial</label>
+                  <input type="text" class="form-control" id="middleInitial" name="middleInitial">
+                  <div id="middleInitialHint" class="text-info text-right" style="font-size: 12px"></div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="field-label text-left">Last Name</div>
+                  <label for="lastName" class="sr-only">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" name="lastName" required>
+                  <div id="lastNameHint" class="text-info text-right" style="font-size: 12px"></div>
+                </div>
+              </div>
+
+              <div class="field-label text-left">Class Year</div>
+              <label for="classyear" class="sr-only">Class Year</label>
+              <select class="form-control form-control-lg" name="classYear" required>
+                  <option value="">...</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+              </select>
+              <div id="classYearHint" class="text-info text-right" style="font-size: 12px"></div>
+
+              <br>
+              <br>
+              <br>
+
+              <h6 class="text-right text-muted">USER CREDENTIALS</h6>
+              <hr>
+
+              <div class="field-label text-left">Email Address</div>
+              <label for="email" class="sr-only">Email</label>
+              <input type="text" class="form-control" id="email" name="email" required>
+
+              <div class="field-label text-left">Password</div>
+              <label for="password" class="sr-only">Password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+
+              <div class="field-label text-left">Confirm Password</div>
+              <label for="confirmPassword" class="sr-only">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" required>
+              <div id="confirmPasswordHint" class="text-info text-right" style="font-size: 12px"></div>
+              <!--Check in real time to make sure it equals the entered password-->
+
+              <br>
+              
+              <div class="row">
+                  <div class="col-md-6">
+                      <button class="btn btn-block btn-outline-success" type="submit">Create Account</button>
+                  </div>
+                  <div class="col-md-6">
+                      <a href="/login" style="text-decoration:none;"><button class="btn btn-outline-danger btn-block" onclick="this.disabled = true;">Back to Login</button></a>
+                  </div>
+              </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

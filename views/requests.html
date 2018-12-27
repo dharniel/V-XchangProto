@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A Book Exchange Platform for Vassar Students">
+    <meta name="author" content="Daniel Elendu">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="../styles/home.css" rel="stylesheet">
+    <title>Requests</title>
+
+  </head>
+  <body>
+    <div id="body">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="/feed">V-Xchange</a>
+          <button class="navbar-toggler btn btn-outline-dark" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="material-icons">expand_more</i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="/feed">Books</a>
+              <a class="nav-item nav-link active" href="/requests">Requests</a>
+              <a class="nav-item nav-link" href="/mypostfollows">Saved Posts</a>
+              <a class="nav-item nav-link" href="/myposts">My Textbooks and Requests</a>
+              <a class="nav-item nav-link" href="/preferences">Preferences</a>
+            </div>
+            <form class="form-inline" onsubmit="event.preventDefault(); getSearchItem();">
+              <div class="d-flex justify-content-end">
+                <input id="searchBox" class="search-animation-pre" type="search" placeholder="Search Requests" aria-label="Search">
+                <button class="btn btn-dark my-2 my-sm-0" type="submit"><i class="material-icons">search</i></button>
+              </div>
+            </form>
+            <!--Notifications Swipe-->
+            <button id="notifications-toggle" class="btn btn-dark my-2 my-sm-0" style="cursor: pointer" data-toggle="tooltip" data-placement="bottom" title="Notifications" onclick="openNav()"><i class="material-icons">notification_important</i></i>
+              <a href="/logout" style="text-decoration:none;"><button data-toggle="tooltip" data-placement="bottom" title="Logout" class="btn btn-dark my-2 my-sm-0" onclick="this.disabled = true;"><i class="material-icons">exit_to_app</i></button></a>
+            </div>
+      </nav>
+
+      <div id="notifications" class="notificationsnav">
+          <span class="list-group-item h5 sticky-top font-weight-bold text-left">Notifications<i class="closebtn pl-6 material-icons" onclick="closeNav()">close</i></span>
+          <ul class="list-group text-left" id="notificationsList">
+          </ul>
+      </div>
+
+    <div id="main" class="container-fluid page-content">
+      <div class="text-left">
+        <br>
+        <div class="d-flex pt-1">
+            <span class="material-icons pt-1">notification_important</span>
+            <p class="h4 ml-3 font-weight-bold">Requests</p>
+            <a class="h5 ml-auto" href="/profile"><span id="username"></span></a>
+        </div>
+        <hr class="p-1 m-1">
+
+        <div class="text-center" id="viewsSelect">
+            <span class="h5 font-weight-bold" id="seeAll" onclick="getRequests()" style="cursor:pointer;">View All</span>
+            <span class="h4 font-weight-normal">|</span>
+            <span class="h5 font-weight-normal" id="seeByCourse" onclick="getFollows()" style="cursor:pointer;">View By Course</span>
+        </div>
+
+        <div class="text-center" id="searchInfo" hidden="true">
+            <p class><a href="/requests">Back to Requests</a></p>
+          <p class="h4 font-weight-bold">Search Results</p>
+        </div>
+
+        <hr class="p-1 m-1">
+
+        <span id="sortBtn" class="text-left dropdown">
+          <span class="dropdown show">
+            <a class="btn btn-outline-dark btn-sm dropdown-toggle material-icons" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              sort
+            </a>
+          
+            <span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" style="cursor:pointer;" onClick="sortTimeAsc()">By Time Posted &uarr;</a>
+              <a class="dropdown-item" style="cursor:pointer;" onClick="sortTimeDesc()">By Time Posted &darr;</a>
+              <a class="dropdown-item" style="cursor:pointer;" onClick="sortCourseAsc()">By Course Name &uarr;</a>
+              <a class="dropdown-item" style="cursor:pointer;" onClick="sortCourseDesc()">By Course Name &darr;</a>
+            </span>
+          </span>
+        </span>
+
+        <span class="text-right dropdown" id="followsButton" style="position: absolute; right: 20px">
+          <span class="dropdown show">
+            <a class="btn btn-outline-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Courses followed
+            </a>
+          
+            <span id="coursesFollowList" class="dropdown-menu p-2" aria-labelledby="dropdownMenuLink">
+            </span>
+          </span>
+        </span>
+
+
+        <div class="home row" id="allrequests">
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals-->
+  <span id="addpost" class="text-right fixed-bottom fab">
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#postbookrequest"><span class="material-icons">add</span></button>
+  </span>
+    
+  <div class="modal fade" id="postbookrequest" tabindex="-1" role="dialog" aria-labelledby="posttitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="posttitle">Post</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group">
+              <button type="button" class="btn btn-lg btn-outline-dark" data-toggle="modal" data-target="#postbook">Textbook</button>
+              <br>
+              <button type="button" class="btn btn-lg btn-outline-dark" data-toggle="modal" data-target="#postrequest">Request</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="modal fade modalbox" id="postbook" tabindex="-1" role="dialog" aria-labelledby="posttitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-dark text-light">
+              <h5 class="modal-title" id="posttitle">Post</h5>
+              <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="list-group">
+                <form class="create-account" action="/textbook" method="POST">
+
+                  
+                    <div id="textbook">
+                      <h6 class="text-right text-info">TEXTBOOOK</h6>
+                      <hr class="headerhr">
+
+                      <div class="field-label text-left">Textbook Title</div>
+                      <label for="textbookTitle" class="sr-only">Textbook Title</label>
+                      <input type="text" class="form-control" id="textbookTitle" name="textbookTitle" required>
+                      <div id="textbookTitleHint" class="text-info text-right" style="font-size: 12px">Enter title of the textbook you are adding</div>
+
+                      <div class="field-label text-left">Textbook Author (s)</div>
+                      <label for="textbookAuthor#1" class="sr-only">Textbook Author(s)</label>
+                      <input type="text" class="form-control" id="textbookAuthor" name="textbookAuthor" required>
+                      <div id="textbookAuthorHint" class="text-info text-right" style="font-size: 12px">Enter the author(s) name(s) of the textbook you are adding</div>
+
+                      <div class="field-label text-left">Course</div>
+                      <label for="textbookCourse" class="sr-only">Course</label>
+                      <select class="form-control form-control-lg allCoursesHere" id="textbookCourse" name="textbookCourse" required>
+                          <option value="">...</option>
+                      </select>
+                      <div id="textbookCourseHint" class="text-info text-right" style="font-size: 12px"></div>
+
+                      <div class="field-label text-left">Cost</div>
+                      <label for="textbookCost" class="sr-only">Textbook Author(s)</label>
+                      <input type="number" step="any" min="0" class="form-control" id="textbookCost" name="textbookCost" required>
+                      <div id="textbookCostHint" class="text-info text-right" style="font-size: 12px">Enter the cost of the textbook. If free, enter 0.</div>
+
+                      <div class="field-label text-left">Description</div>
+                      <label for="textbookDescription" class="sr-only">Textbook Description</label>
+                      <textarea class="form-control" rows="10" cols="10" id="textbookDescription" name="textbookDescription" placeholder="Enter text" required></textarea>
+                      <div id="textbookDescriptionHint" class="text-info text-right" style="font-size: 12px">Enter details you want viewers to be aware of.</div>
+
+                      <br>
+                      <br>
+                    </div>
+
+                  <br>
+                  <hr>
+                  <div class="row justify-content-end">
+                      <div class="col-md-6">
+                          <button class="btn btn-block btn-outline-success" type="submit">Post</button>
+                      </div>
+                  </div>
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <div class="modal fade modalbox" id="postrequest" tabindex="-1" role="dialog" aria-labelledby="requesttitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-dark text-light">
+              <h5 class="modal-title" id="requesttitle">Request</h5>
+              <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="list-group">
+                <form class="create-account" action="/request" method="POST">
+
+                  <div id="requestentered">
+
+                      <div class="field-label text-left">Course</div>
+                      <label for="requestCourse" class="sr-only">Course</label>
+                      <select class="form-control form-control-lg allCoursesHere" id="requestCourse" name="requestCourse" required>
+                          <option value="">...</option>
+                      </select>
+                      <div id="requestCourseHint" class="text-info text-right" style="font-size: 12px"></div>
+
+                      <div class="field-label text-left">Description</div>
+                      <label for="requestDescription" class="sr-only">Request Description</label>
+                      <textarea class="form-control" rows="10" cols="10" id="requestDescription" name="requestDescription" placeholder="Enter text" required></textarea>
+                      <div id="requestDescriptionHint" class="text-info text-right" style="font-size: 12px">Enter details of your request</div>
+
+                      <br>
+                      <br>
+                    </div>
+                  </div>
+
+                  <br>
+                  <hr>
+                  <div class="row justify-content-end">
+                      <div class="col-md-6">
+                          <button class="btn btn-block btn-outline-success" type="submit">Post</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+  </div>
+
+  </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="../config/jquery.touchSwipe.min.js"></script>
+    <script src="../scripts/request.js"></script>
+  </body>
+</html>

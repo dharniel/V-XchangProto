@@ -1,0 +1,8 @@
+#Ignore README
+README.md
+#Ignore Node Modules
+node_modules/
+#Ignore Configuration Folder
+config/
+#Ignore Editor Files
+.vs*/
